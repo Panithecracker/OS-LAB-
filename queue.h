@@ -11,15 +11,14 @@ typedef struct queue {
 	int head; //index for the first element in the queue
     int tail; //index for the last element in the queue
     int size; // fixed amount of data capable of storing
-    int *data; // actual array of length size of data to store
+    struct element *data; // actual array of length size of element type 
 }queue;
 
 queue* queue_init (int size);
-int queue_empty (queue *q);
-int queue_full(queue *q);
-int queue_put (queue *q, struct element* elem);
-struct element * queue_get(queue *q);
-int queue_destroy (queue *q);
+int queue_empty (queue *cq);
+int queue_full(queue *cq);
+int queue_put (queue *cq, struct element* e);
+struct element * queue_get(queue *cq);
+int queue_destroy (queue *cq);
 
 #endif
-
