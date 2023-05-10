@@ -28,7 +28,7 @@ int queue_empty(queue *cq){
 }
 
 int queue_full(queue *cq){
-	if(cq_empty(cq))
+	if(queue_empty(cq))
     {
         return 0;
     }
@@ -40,14 +40,14 @@ int queue_full(queue *cq){
 }
 
 // To Enqueue an element
-int queue_put(queue *cq, struct element* e) {
-	if(!cq_full(cq)) //check first if the queue is full 
+int queue_put(queue *cq, struct element *e) {
+	if(!queue_full(cq)) //check first if the queue is full 
     {
-        if(cq_empty(cq)) //then, in this special case, recall that we must set head to 0 since it is -1
+        if(queue_empty(cq)) //then, in this special case, recall that we must set head to 0 since it is -1
         {
             cq->head = 0;
         }
-        cq->data[(cq->tail+1)%cq->size] = e; //then, insert it at tail+1 and update the value of tail
+        cq->data[(cq->tail+1)%cq->size] = *e; //then, insert it at tail+1 and update the value of tail
         cq->tail = (cq->tail +1)%cq->size;
         return 1;
     }
@@ -57,9 +57,9 @@ int queue_put(queue *cq, struct element* e) {
 
 // To Dequeue an element.
 struct element* queue_get(queue *cq) {
-	if(!cq_empty(cq)) //check first if the queue is empty already
+	if(!queue_empty(cq)) //check first if the queue is empty already
     {
-        int *e = &cq->data[cq->head]; //element to drop off the queue
+        struct element *e = &cq->data[cq->head]; //element to drop off the queue
         if(cq->head == cq->tail) //only one element so after dequeing, set the head and tail to -1
         {
             cq->head = -1;
