@@ -90,7 +90,7 @@ void *Worker(void *params) //consumer thread function
 		}
 		//printf("Consumed!\n");
 		struct element *data = queue_get(CircularQueue); //dequeue the operation on the circular queue
-		take_action(data, balance, global_balance, bank_numop); //take the respective action and print info on screen
+		take_action(data, balance, &global_balance, bank_numop); //take the respective action and print info on screen
 		bank_numop = bank_numop +1; //increment by 1 the number of consumptions done
 		pthread_cond_signal(&full); //signal to a producer that the queue is not full
 		pthread_mutex_unlock(&mutex); //unlock the mutex
