@@ -3,8 +3,12 @@
 
 
 struct element {
-	// Define the struct yourself
-	int param1;
+    int account_number;
+    int acc_from;
+    int acc_to;
+    float amount;
+    int operation_id;
+	
 };
 
 typedef struct queue {
@@ -20,5 +24,12 @@ int queue_full(queue *cq);
 int queue_put (queue *cq, struct element* e);
 struct element * queue_get(queue *cq);
 int queue_destroy (queue *cq);
+
+//function that does the reading and storing info inside array of elements 
+int read_operations(char *file, struct element *list_client_ops);
+
+//function that performs an ATM request given an operation ie : element object, which potentially accesses balance array and global balance variable
+int take_action(struct element *data, int *balance, int global_balance, int bank_numop);
+
 
 #endif
