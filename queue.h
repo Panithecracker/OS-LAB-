@@ -6,7 +6,7 @@ struct element {
     int account_number;
     int acc_from;
     int acc_to;
-    float amount;
+    int amount;
     int operation_id;
 	
 };
@@ -29,7 +29,7 @@ int queue_destroy (queue *cq);
 int read_operations(char *file, struct element *list_client_ops);
 
 //function that performs an ATM request given an operation ie : element object, which potentially accesses balance array and global balance variable
-int take_action(struct element *data, int *balance, int global_balance, int bank_numop);
+int take_action(struct element *data, int *balance, int *global_balance, int bank_numop);
 
 
 #endif
