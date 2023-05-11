@@ -138,32 +138,32 @@ int read_operations(char *file, struct element *list_client_ops)
 
 
 //function that performs an ATM request given an operation ie : element object, which potentially accesses balance array and global balance variable
-int take_action(struct element *data, int *balance, int global_balance, int bank_numop)
+int take_action(struct element *data, int *balance, int *global_balance, int bank_numop)
 {
 		switch (data->operation_id) {
 		    case 1: // CREATE
 		      balance[data->account_number] = 0;
-		      printf("%d CREATE %d BALANCE=%d TOTAL=%d\n", bank_numop+1, data->account_number, balance[data->account_number], global_balance);
+		      printf("%d CREATE %d BALANCE=%d TOTAL=%d\n", bank_numop+1, data->account_number, balance[data->account_number], *global_balance);
 		      return 0;
 		    case 2: // DEPOSIT
 		      balance[data->account_number] += data->amount;
-		      global_balance += data->amount;
-		      printf("%d DEPOSIT %d %d BALANCE=%d TOTAL=%d\n", bank_numop+1, data->account_number, data->amount, balance[data->account_number], global_balance);
+		      *global_balance += data->amount;
+		      printf("%d DEPOSIT %d %d BALANCE=%d TOTAL=%d\n", bank_numop+1, data->account_number, data->amount, balance[data->account_number], *global_balance);
 			  return 0;
 		    case 3: // TRANSFER
 		      // Total stays the same (Balance of the accounts change)
 		      balance[data->acc_from] -= data->amount;
 		      balance[data->acc_to] += data->amount;
-		      printf("%d TRANSFER %d %d %d BALANCE=%d TOTAL=%d\n", bank_numop+1, data->acc_from, data->acc_to, data->amount, balance[data->acc_to], global_balance);
+		      printf("%d TRANSFER %d %d %d BALANCE=%d TOTAL=%d\n", bank_numop+1, data->acc_from, data->acc_to, data->amount, balance[data->acc_to], *global_balance);
 			  return 0;
 		    case 4: // WITHDRAW
 		      balance[data->account_number] -= data->amount;
-		      global_balance -= data->amount;
-		      printf("%d WITHDRAW %d %d BALANCE=%d TOTAL=%d\n", bank_numop+1, data->account_number, data->amount, balance[data->account_number], global_balance);
+		      *global_balance -= data->amount;
+		      printf("%d WITHDRAW %d %d BALANCE=%d TOTAL=%d\n", bank_numop+1, data->account_number, data->amount, balance[data->account_number], *global_balance);
 		   	  return 0;
 		    case 5: // BALANCE
 		      // Nada creo
-		      printf("%d BALANCE %d BALANCE=%d TOTAL=%d\n", bank_numop+1, data->account_number, balance[data->account_number], global_balance);
+		      printf("%d BALANCE %d BALANCE=%d TOTAL=%d\n", bank_numop+1, data->account_number, balance[data->account_number], *global_balance);
 		      return 0;
 		    default:
 		      perror("Not valid operation");
